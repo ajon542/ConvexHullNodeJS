@@ -2,7 +2,7 @@
 
 var router = express.Router();
 
-// List of points.
+// Default list of points.
 var points = [
     { x: 100, y: 100 },
     { x: 100, y: 300 },
@@ -12,6 +12,7 @@ var points = [
 
 // Get the index.
 router.get('/', function (req, res) {
+
     res.render('index', {
         title: 'Convex Hull',
         items: points
@@ -34,13 +35,17 @@ router.post('/generate', function (req, res) {
     }
     
     // Run the convex hull algorithm.
-    var output = convexHull(points);
-    points = output;
+    points = convexHull(points);
     
     // Refresh the browser.
     res.redirect('/');
 });
 
+/// <summary>
+/// Simple vector2 class.
+/// </summary>
+/// <param name="x">The x-coordinate.</param>
+/// <param name="y">The y-coordinate.</param>
 function Vector2(x, y) {
     this.x = x;
     this.y = y;
@@ -111,12 +116,27 @@ function findLowestPoint(input) {
     return lowestPoint;
 }
 
+/// <summary>
+/// Simple vector attributes class used in the convex hull algorithm.
+/// </summary>
+/// <param name="vector">The vector.</param>
+/// <param name="angle">The angle with the lowest vector.</param>
+/// <param name="distanceSquared">The distance squared from the lowest vector.</param>
 function VectorAttributes(vector, angle, distanceSquared) {
     this.vector = vector;
     this.angle = angle;
     this.distanceSquared = distanceSquared;
 }
 
+/// <summary>
+/// Convex hull algorithm based on Graham scan.
+/// </summary>
+/// <remarks>
+/// The first part of the algorithm performs preprocessing on the points.
+/// The preprocessing involves removing points which are clearly not on the
+/// convex hull. It then sorts the points before running the Graham scan.
+/// </remarks>
+/// <param name="input">The list of vectors.</param>
 function convexHull(input) {
     // Three or less points is already the ocnvex hull.
     if (input.length <= 3) {
@@ -173,6 +193,11 @@ function convexHull(input) {
     return output;
 }
 
+/// <summary>
+/// Comparison function used for sorting the vectors.
+/// </summary>
+/// <param name="a">The first vector.</param>
+/// <param name="b">The second vector.</param>
 function compare(a, b) {
     if (a.angle < b.angle) {
         return -1;
@@ -182,7 +207,6 @@ function compare(a, b) {
     }
     return 0;
 }
-
 
 // Expose the router to the world.
 module.exports = router;
