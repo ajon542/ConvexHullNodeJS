@@ -33,8 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="convexhull.js" />
     <Compile Include="routes\examples.js" />
     <Compile Include="routes\index.js" />
+    <Compile Include="vectorutils.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="views\index.ejs" />

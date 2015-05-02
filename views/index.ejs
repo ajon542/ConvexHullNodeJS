@@ -19,8 +19,9 @@
             <input type="text" name="pointCount">
             <input type="submit">
         </form>
+		<p></p>
 
-		<canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000;">
+		<canvas id="myCanvas" width="600" height="400" style="border:2px solid #000000;">
 		</canvas>
 
     </div>
@@ -44,7 +45,7 @@
     <script>
 		var canvas = document.getElementById("myCanvas");
 		var context = canvas.getContext("2d");
-		context.fillStyle = "#FF0000";
+		context.fillStyle = "#FFFFFF";
 		context.fillRect(0,0,600,400);
 		context.fillStyle = "#00FF00";
 		context.beginPath();
