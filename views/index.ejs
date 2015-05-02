@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>My App</title>
+</head>
+<body>
+
+	<div class="container">
+	    <h1><%= title %></h1>
+        <!--<ul>
+            <% for (var i = 0; i < items.length; i++) { %>
+                <li><%= items[i].x  + ", " +  items[i].y %></li>
+            <% } %>
+        </ul>-->
+
+        <form action="/generate" method="post">
+            <input type="text" name="pointCount">
+            <input type="submit">
+        </form>
+
+		<canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000;">
+		</canvas>
+
+    </div>
+
+    <script src="jquery/dist/jquery.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+
+    <script>
+
+        var socket = io();
+
+        socket.on('welcome', function(data) {
+            socket.emit('i am client', {data: 'foo!', id: data.id});
+        });
+
+        socket.on('error', console.error.bind(console));
+        socket.on('message', console.log.bind(console));
+
+    </script>
+
+    <script>
+		var canvas = document.getElementById("myCanvas");
+		var context = canvas.getContext("2d");
+		context.fillStyle = "#FF0000";
+		context.fillRect(0,0,600,400);
+		context.fillStyle = "#00FF00";
+		context.beginPath();
+
+		context.moveTo(<%= items[0].x %>, <%= items[0].y %>);
+		
+		<% for (var i = 1; i < items.length; i++) { %>
+			context.lineTo(<%= items[i].x %>, <%= items[i].y %>);
+        <% } %>
+
+		context.lineTo(<%= items[0].x %>, <%= items[0].y %>);
+
+		context.stroke();
+    
+	</script>
+</body>
+</html>
