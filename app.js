@@ -1,6 +1,7 @@
 ﻿var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var convexhull = require('./convexhull.js');
 
 var app = express();
 
@@ -40,5 +41,19 @@ io.on('connection', function (socket) {
     socket.emit('welcome', { message: 'Welcome!', id: socket.id });
     
     socket.on('i am client', console.log);
+
+    socket.on('add point', function (data) {
+        console.log(data.x + ", " + data.y);
+        points.push({ x: data.x, y: data.y });
+        
+        // Run the convex hull algorithm.
+        points = convexhull.convexHull(points);
+        
+        socket.emit("regenerate convex hull", { p: points });
+    });
 });
+
+// Default list of points.
+var points = [
+];
 
