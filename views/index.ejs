@@ -38,12 +38,18 @@
 
     <script>
 
-		var points = [];
-		<% for (var i = 0; i < items.length; i++) { %>
-			points.push({ x: <%= items[i].x %>, y: <%= items[i].y %>});
+		var pointsOnHull = [];
+		<% for (var i = 0; i < pointsOnHull.length; i++) { %>
+			pointsOnHull.push({ x: <%= pointsOnHull[i].x %>, y: <%= pointsOnHull[i].y %>});
+        <% } %>
+
+		var initialPoints = [];
+		<% for (var i = 0; i < initialPoints.length; i++) { %>
+			initialPoints.push({ x: <%= initialPoints[i].x %>, y: <%= initialPoints[i].y %>});
         <% } %>
 		
-		drawConvexHull(points);
+		drawConvexHull(pointsOnHull);
+		drawPoints(initialPoints);
     
 	</script>
 </body>

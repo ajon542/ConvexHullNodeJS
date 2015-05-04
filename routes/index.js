@@ -6,19 +6,22 @@ var router = express.Router();
 var pointCount = 4;
 
 // Default list of points.
-var points = [
+var initialPoints = [
     { x: 100, y: 100 },
     { x: 100, y: 300 },
     { x: 300, y: 300 },
     { x: 300, y: 100 }
 ];
 
+var pointsOnHull = [];
+
 // Get the index.
 router.get('/', function (req, res) {
 
     res.render('index', {
         title: 'Convex Hull',
-        items: points
+        initialPoints: initialPoints,
+        pointsOnHull: pointsOnHull
     });
 });
 
@@ -31,13 +34,13 @@ router.post('/generate', function (req, res) {
     }
     
     // Generate random points.
-    points = [];
+    initialPoints = [];
     for (var i = 0; i < pointCount; ++i) {
-        points.push({ x: Math.random() * 600, y: Math.random() * 400 });
+        initialPoints.push({ x: Math.random() * 600, y: Math.random() * 400 });
     }
     
     // Run the convex hull algorithm.
-    points = convexhull.convexHull(points);
+    pointsOnHull = convexhull.convexHull(initialPoints);
     
     // Refresh the browser.
     res.redirect('/');

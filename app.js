@@ -45,13 +45,14 @@ io.on('connection', function (socket) {
 
     socket.on('add point', function (data) {
         console.log(data.x + ", " + data.y);
-        points.push({ x: data.x, y: data.y });
+        initialPoints.push({ x: data.x, y: data.y });
         
         // Run the convex hull algorithm.
-        points = convexhull.convexHull(points);
+        pointsOnHull = convexhull.convexHull(initialPoints);
         
-        socket.emit("regenerate convex hull", { p: points });
+        socket.emit("regenerate convex hull", { initialPoints: initialPoints, pointsOnHull: pointsOnHull });
     });
 });
 
-var points = [];
+var initialPoints = [];
+var pointsOnHull = [];

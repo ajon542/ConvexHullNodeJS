@@ -7,9 +7,10 @@ socket.on('welcome', function (data) {
 socket.on('regenerate convex hull', function (data) {
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
-    context.clearRect(0 , 0 , canvas.width, canvas.height);
-    
-    drawConvexHull(data.p);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawConvexHull(data.pointsOnHull);
+    drawPoints(data.initialPoints);
 });
 
 socket.on('error', console.error.bind(console));
@@ -51,7 +52,6 @@ function drawConvexHull(data) {
     var context = canvas.getContext("2d");
     context.fillStyle = "#FFFFFF";
     context.fillRect(0, 0, 600, 400);
-    context.fillStyle = "#00FF00";
     
     context.beginPath();
     
@@ -64,4 +64,14 @@ function drawConvexHull(data) {
     context.lineTo(data[0].x, data[0].y);
     
     context.stroke();
+}
+
+function drawPoints(points) {
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext("2d");
+    context.fillStyle = "#FF0000";
+    
+    for (var i = 0; i < points.length; ++i) {
+        context.fillRect(points[i].x - 2.5, points[i].y - 2.5, 5, 5);   
+    }
 }
