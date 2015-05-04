@@ -12,6 +12,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Use middleware. These occur in order.
 // bootstrap and jquery
 app.use(express.static(path.join(__dirname, 'node_modules')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // For parsing the body of the request.
 app.use(bodyParser());
@@ -53,7 +54,4 @@ io.on('connection', function (socket) {
     });
 });
 
-// Default list of points.
-var points = [
-];
-
+var points = [];

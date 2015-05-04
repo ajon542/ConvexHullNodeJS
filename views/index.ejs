@@ -4,20 +4,25 @@
 <head>
     <meta charset="utf-8" />
     <title>My App</title>
+	<!--<style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>-->
 </head>
 <body>
 
 	<div class="container">
 	    <h1><%= title %></h1>
-        <!--<ul>
-            <% for (var i = 0; i < items.length; i++) { %>
-                <li><%= items[i].x  + ", " +  items[i].y %></li>
-            <% } %>
-        </ul>-->
 
         <form action="/generate" method="post">
-            <input type="text" name="pointCount">
-            <input type="submit">
+            <input type="text" autocomplete="off" name="pointCount">
+			<button>Generate</button>
         </form>
 		<p></p>
 
@@ -29,88 +34,17 @@
     <script src="jquery/dist/jquery.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 
+	<script src="test.js"></script>
+
     <script>
-		var canvas = document.getElementById("myCanvas");
-		var context = canvas.getContext("2d");
-		context.fillStyle = "#FFFFFF";
-		context.fillRect(0,0,600,400);
-		context.fillStyle = "#00FF00";
-		context.beginPath();
 
-		context.moveTo(<%= items[0].x %>, <%= items[0].y %>);
-		
-		<% for (var i = 1; i < items.length; i++) { %>
-			context.lineTo(<%= items[i].x %>, <%= items[i].y %>);
+		var points = [];
+		<% for (var i = 0; i < items.length; i++) { %>
+			points.push({ x: <%= items[i].x %>, y: <%= items[i].y %>});
         <% } %>
-
-		context.lineTo(<%= items[0].x %>, <%= items[0].y %>);
-
-		context.stroke();
+		
+		drawConvexHull(points);
     
 	</script>
-
-	<script>
-	    var socket = io();
-
-        socket.on('welcome', function(data) {
-            socket.emit('i am client', {data: 'foo!', id: data.id});
-        });
-
-		socket.on('regenerate convex hull', function(data) {
-			var canvas = document.getElementById("myCanvas");
-			var context = canvas.getContext("2d");
-			context.clearRect ( 0 , 0 , canvas.width, canvas.height );
-			
-			context.beginPath();
-
-			context.moveTo(data.p[0].x, data.p[0].y);
-		
-			for (var i = 1; i < data.p.length; i++) {
-				context.lineTo(data.p[i].x, data.p[i].y);
-			}
-
-			context.lineTo(data.p[0].x, data.p[0].y);
-
-			context.stroke();
-        });
-
-        socket.on('error', console.error.bind(console));
-        socket.on('message', console.log.bind(console));
-
-
-		document.addEventListener("DOMContentLoaded", init, false);
-
-		function init()
-		{
-			var canvas = document.getElementById("myCanvas");
-			canvas.addEventListener("mousedown", getPosition, false);
-		}
-
-		function getPosition(event)
-		{
-			var x = new Number();
-			var y = new Number();
-			var canvas = document.getElementById("myCanvas");
-
-			if (event.x != undefined && event.y != undefined)
-			{
-				x = event.x;
-				y = event.y;
-			}
-			else // Firefox method to get the position
-			{
-				x = event.clientX + document.body.scrollLeft +
-					document.documentElement.scrollLeft;
-				y = event.clientY + document.body.scrollTop +
-					document.documentElement.scrollTop;
-			}
-
-			x -= canvas.offsetLeft;
-			y -= canvas.offsetTop;
-
-			socket.emit("add point", { x: x, y: y });
-		}
-
-    </script>
 </body>
 </html>

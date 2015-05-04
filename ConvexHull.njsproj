@@ -36,12 +36,14 @@
     <Compile Include="convexhull.js" />
     <Compile Include="routes\examples.js" />
     <Compile Include="routes\index.js" />
+    <Compile Include="public\test.js" />
     <Compile Include="vectorutils.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="views\index.ejs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="public\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
   </ItemGroup>
