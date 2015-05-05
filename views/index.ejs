@@ -21,8 +21,10 @@
 	    <h1><%= title %></h1>
 
         <form action="/generate" method="post">
-            <input type="text" autocomplete="off" name="pointCount">
-			<button>Generate</button>
+            Number of Points: <input type="text" autocomplete="off" name="pointCount" value=<%= pointCount %>>
+
+			<input type="submit" name="GenerateButton" value="Generate" />
+			<input type="submit" name="ClearButton" value="Clear" />
         </form>
 		<p></p>
 

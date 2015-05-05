@@ -44,6 +44,10 @@ io.on('connection', function (socket) {
     socket.on('i am client', console.log);
 
     socket.on('add point', function (data) {
+        
+        // TODO: Clear these points.
+        // This should really be in another file because this code is duplicated in
+        // index.js when the /generate form post occurs.
         console.log(data.x + ", " + data.y);
         initialPoints.push({ x: data.x, y: data.y });
         

@@ -50,7 +50,23 @@ function findAngle(v1, v2) {
     return Math.atan2(dy, dx) * (180 / Math.PI);
 }
 
+/// <summary>
+/// Generate a list of random points.
+/// </summary>
+/// <param name="count">The number of points to generate.</param>
+/// <param name="xMax">The maximum value for the x-coord.</param>
+/// <param name="yMax">The maximum value for the y-coord.</param>
+/// <returns>A list of random points.</returns>
+function generateRandomPoints(count, xMax, yMax) {
+    var points = [];
+    for (var i = 0; i < count; ++i) {
+        points.push({ x: Math.random() * xMax, y: Math.random() * yMax });
+    }
+    return points;
+}
+
 exports.Vector2 = Vector2;
 exports.orientation = orientation;
 exports.distanceSquared = distanceSquared;
 exports.findAngle = findAngle;
+exports.generateRandomPoints = generateRandomPoints;
