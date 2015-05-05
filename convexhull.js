@@ -31,7 +31,7 @@ function findLowestPoint(input) {
             }
         }
     }
-    
+
     return lowestPoint;
 }
 
@@ -74,9 +74,16 @@ function convexHull(input) {
     for (var i = 0; i < input.length; ++i) {
         
         // Create the vector angle and distance attributes.
+        var angle = vectorutils.findAngle(lowestPoint, input[i]);
+        if (input[i] == lowestPoint) {
+            // We always want the lowest point to be included in the final
+            // output. Assign a negative angle that guarantees that this
+            // point will be at the 0-index after the array is sorted by angle.
+            angle = -1;
+        }
         var va = new VectorAttributes(
-            input[i], 
-            vectorutils.findAngle(lowestPoint, input[i]),
+            input[i],
+            angle,
             vectorutils.distanceSquared(lowestPoint, input[i]));
         
         // Add the vector to the dictionary.

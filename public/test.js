@@ -4,6 +4,10 @@ socket.on('welcome', function (data) {
     socket.emit('i am client', { data: 'foo!', id: data.id });
 });
 
+/// <summary>
+/// This function gets called when a new point has been added
+/// by the user.
+/// </summary>
 socket.on('regenerate convex hull', function (data) {
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
@@ -72,6 +76,18 @@ function drawPoints(points) {
     context.fillStyle = "#FF0000";
     
     for (var i = 0; i < points.length; ++i) {
-        context.fillRect(points[i].x - 2.5, points[i].y - 2.5, 5, 5);   
+        drawCircle(points[i].x, points[i].y); 
     }
+}
+
+function drawCircle(centerX, centerY) {
+    var radius = 3;
+    
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext("2d");
+    context.beginPath();
+    context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+    context.lineWidth = 2;
+    context.strokeStyle = '#FF0000';
+    context.stroke();
 }

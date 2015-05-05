@@ -58,5 +58,8 @@ io.on('connection', function (socket) {
     });
 });
 
+// TODO: Look into the use of global variables. This is a server where multiple clients
+// can be connected and potentially modifying these values. Not entirely sure what nodejs
+// does here...
 var initialPoints = [];
 var pointsOnHull = [];

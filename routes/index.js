@@ -5,8 +5,8 @@ var vectorutils = require('../vectorutils.js');
 var router = express.Router();
 
 var pointCount = 4;
-var initialPoints = [];
 var pointsOnHull = [];
+var initialPoints = [];
 
 // Get the index.
 router.get('/', function (req, res) {
