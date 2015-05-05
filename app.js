@@ -27,7 +27,8 @@ app.use(function (req, res, next) {
 });
 
 // Define the routes.
-app.use(require('./routes/index'));
+var routes = require('./routes/index');
+app.use(routes);
 
 // Start the server and listen for incoming connections.
 var port = 1337;
@@ -45,21 +46,11 @@ io.on('connection', function (socket) {
 
     socket.on('add point', function (data) {
         
-        // TODO: Clear these points.
-        // This should really be in another file because this code is duplicated in
-        // index.js when the /generate form post occurs.
-        console.log(data.x + ", " + data.y);
-        initialPoints.push({ x: data.x, y: data.y });
-        
-        // Run the convex hull algorithm.
-        pointsOnHull = convexHull(initialPoints);
+        routes.addPoint({ x: data.x, y: data.y });
+
+        var pointsOnHull = routes.calculateConvexHull();
+        var initialPoints = routes.getInitialPoints();
         
         socket.emit("regenerate convex hull", { initialPoints: initialPoints, pointsOnHull: pointsOnHull });
     });
 });
-
-// TODO: Look into the use of global variables. This is a server where multiple clients
-// can be connected and potentially modifying these values. Not entirely sure what nodejs
-// does here...
-var initialPoints = [];
-var pointsOnHull = [];

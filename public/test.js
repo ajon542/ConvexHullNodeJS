@@ -20,13 +20,18 @@ socket.on('regenerate convex hull', function (data) {
 socket.on('error', console.error.bind(console));
 socket.on('message', console.log.bind(console));
 
+/// <summary>
+/// Add listener for the mousedown event that occurs on the canvas.
+/// </summary>
 document.addEventListener("DOMContentLoaded", init, false);
-
 function init() {
     var canvas = document.getElementById("myCanvas");
     canvas.addEventListener("mousedown", getPosition, false);
 }
 
+/// <summary>
+/// Determine the position of the mousedown on the canvas.
+/// </summary>
 function getPosition(event) {
     var x = new Number();
     var y = new Number();
@@ -50,8 +55,11 @@ function getPosition(event) {
     socket.emit("add point", { x: x, y: y });
 }
 
-
+/// <summary>
+/// Draw the convex hull on the canvas.
+/// </summary>
 function drawConvexHull(data) {
+    // TODO: getElement and getConext are called for every function, clean this up.
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
     context.fillStyle = "#FFFFFF";
@@ -70,16 +78,21 @@ function drawConvexHull(data) {
     context.stroke();
 }
 
+/// <summary>
+/// Draw the points on the canvas.
+/// </summary>
 function drawPoints(points) {
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
-    context.fillStyle = "#FF0000";
     
     for (var i = 0; i < points.length; ++i) {
         drawCircle(points[i].x, points[i].y); 
     }
 }
 
+/// <summary>
+/// Point represented as a circle.
+/// </summary>
 function drawCircle(centerX, centerY) {
     var radius = 3;
     
@@ -87,7 +100,5 @@ function drawCircle(centerX, centerY) {
     var context = canvas.getContext("2d");
     context.beginPath();
     context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-    context.lineWidth = 2;
-    context.strokeStyle = '#FF0000';
     context.stroke();
 }

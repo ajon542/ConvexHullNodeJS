@@ -31,29 +31,46 @@ router.post('/generate', function (req, res) {
         }
         
         // Generate random points.
-        initialPoints = vectorutils.generateRandomPoints(pointCount, 600, 400);
-        
-        initialPoints =
-        [
-            { x: 10, y: 10 },
-            { x: 50, y: 10 },
-            { x: 5, y: 30 },
-            { x: 50, y: 60 },
-        ];
+        generatePoints();
         
         // Run the convex hull algorithm.
-        pointsOnHull = convexHull(initialPoints);
-
-        console.log(pointsOnHull);
+        calculateConvexHull();
 
     } else if (req.body['ClearButton']) {
-        pointsOnHull = [];
-        initialPoints = [];
+        clearPoints();
     }
     
     // Refresh the browser.
     res.redirect('/');
 });
 
+function addPoint(point) {
+    initialPoints.push({ x: point.x, y: point.y });
+}
+
+function getInitialPoints() {
+    return initialPoints;
+}
+
+function generatePoints() {
+    initialPoints = vectorutils.generateRandomPoints(pointCount, 600, 400);
+    return initialPoints;
+}
+
+function calculateConvexHull() {
+    pointsOnHull = convexHull(initialPoints);
+    return pointsOnHull;
+}
+
+function clearPoints() {
+    pointsOnHull = [];
+    initialPoints = [];
+}
+
 // Expose the router to the world.
 module.exports = router;
+module.exports.addPoint = addPoint;
+module.exports.getInitialPoints = getInitialPoints;
+module.exports.generatePoints = generatePoints;
+module.exports.calculateConvexHull = calculateConvexHull;
+module.exports.clearPoints = clearPoints;
