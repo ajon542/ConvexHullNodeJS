@@ -1,5 +1,7 @@
 ﻿var vectorutils = require('./vectorutils.js');
 
+module.exports = convexHull;
+
 /// <summary>
 /// Simple vector attributes class used in the convex hull algorithm.
 /// </summary>
@@ -125,4 +127,3 @@ function convexHull(input) {
     return output;
 }
 
-exports.convexHull = convexHull;

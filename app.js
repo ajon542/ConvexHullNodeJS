@@ -1,7 +1,7 @@
 ﻿var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var convexhull = require('./convexhull.js');
+var convexHull = require('./convexhull.js');
 
 var app = express();
 
@@ -52,7 +52,7 @@ io.on('connection', function (socket) {
         initialPoints.push({ x: data.x, y: data.y });
         
         // Run the convex hull algorithm.
-        pointsOnHull = convexhull.convexHull(initialPoints);
+        pointsOnHull = convexHull(initialPoints);
         
         socket.emit("regenerate convex hull", { initialPoints: initialPoints, pointsOnHull: pointsOnHull });
     });

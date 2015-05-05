@@ -1,5 +1,5 @@
 ﻿var express = require('express');
-var convexhull = require('../convexhull.js');
+var convexHull = require('../convexhull.js');
 var vectorutils = require('../vectorutils.js');
 
 var router = express.Router();
@@ -33,8 +33,18 @@ router.post('/generate', function (req, res) {
         // Generate random points.
         initialPoints = vectorutils.generateRandomPoints(pointCount, 600, 400);
         
+        initialPoints =
+        [
+            { x: 10, y: 10 },
+            { x: 50, y: 10 },
+            { x: 5, y: 30 },
+            { x: 50, y: 60 },
+        ];
+        
         // Run the convex hull algorithm.
-        pointsOnHull = convexhull.convexHull(initialPoints);
+        pointsOnHull = convexHull(initialPoints);
+
+        console.log(pointsOnHull);
 
     } else if (req.body['ClearButton']) {
         pointsOnHull = [];
