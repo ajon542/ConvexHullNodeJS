@@ -1,6 +1,6 @@
 ﻿# ConvexHull
 
-[Finds the convex hull given a set of points.]
+Finds the convex hull given a set of points.
 
 # Example
 
@@ -52,7 +52,7 @@ The default method from the package calculate the convex hull, given a set of po
 
 # Notes and references
 
-* (http://en.wikipedia.org/wiki/Graham_scan)
+* http://en.wikipedia.org/wiki/Graham_scan
 
 
 
