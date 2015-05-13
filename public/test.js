@@ -63,7 +63,7 @@ function drawConvexHull(data) {
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
     context.fillStyle = "#FFFFFF";
-    context.fillRect(0, 0, 600, 400);
+    context.fillRect(0, 0, 1200, 800);
     
     context.beginPath();
     

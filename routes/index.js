@@ -53,7 +53,7 @@ function getInitialPoints() {
 }
 
 function generatePoints() {
-    initialPoints = vectorutils.generateRandomPoints(pointCount, 600, 400);
+    initialPoints = vectorutils.generateRandomPoints(pointCount, 1200, 800);
     return initialPoints;
 }
 
